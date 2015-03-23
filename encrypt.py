@@ -35,5 +35,5 @@ def decrypt_file(file_name, key):
 
 key = b'\xbf\xc0\x85)\x10nc\x94\x02)j\xdf\xcb\xc4\x94\x9d(\x9e[EX\xc8\xd5\xbfI{\xa2$\x05(\xd5\x18'
 
-#encrypt_file('input.txt', key)
+encrypt_file('input.txt', key)
 decrypt_file('input.txt.enc', key)
