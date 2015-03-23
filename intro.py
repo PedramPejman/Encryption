@@ -1,3 +1,5 @@
+####NO LONGER BEING USED. REFER TO ENCRYPT.PY FOR NEWER IMPLEMENTATION
+
 from Crypto.Cipher import AES
 import base64
 import os
