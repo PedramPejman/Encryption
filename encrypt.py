@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import sys
 from Crypto import Random
 from Crypto.Cipher import AES
 
@@ -33,7 +34,8 @@ def decrypt_file(file_name, key):
         fo.write(dec)
 
 
-key = b'\xbf\xc0\x85)\x10nc\x94\x02)j\xdf\xcb\xc4\x94\x9d(\x9e[EX\xc8\xd5\xbfI{\xa2$\x05(\xd5\x18'
+key = b'\xbf\xc0\x85)\x10nc\x94\x02)j\xdf\xcb\xc4\x94\[EX\x9d(\x9e\xc8\xd5\xbfI{\xa2$\x05(\xd5'
+print(sys.getsizeof(key))
 
 encrypt_file('input.txt', key)
 decrypt_file('input.txt.enc', key)
