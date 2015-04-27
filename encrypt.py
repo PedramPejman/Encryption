@@ -1,42 +1,41 @@
 #!/usr/bin/python3
 
-import sys, base64, os
+import sys
 from Crypto import Random
 from Crypto.Cipher import AES
 
-def create_key(length=64):
-  return os.urandom(32)
-
 def pad(s):
-  return s + b"\0" * (AES.block_size - len(s) % AES.block_size)
+    return s + b"\0" * (AES.block_size - len(s) % AES.block_size)
 
 def encrypt(message, key, key_size=256):
-  message = pad(message)
-  iv = Random.new().read(AES.block_size)
-  cipher = AES.new(key, AES.MODE_CBC, iv)
-  return iv + cipher.encrypt(message)
+    message = pad(message)
+    iv = Random.new().read(AES.block_size)
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    return iv + cipher.encrypt(message)
 
 def decrypt(ciphertext, key):
-  iv = ciphertext[:AES.block_size]
-  cipher = AES.new(key, AES.MODE_CBC, iv)
-  plaintext = cipher.decrypt(ciphertext[AES.block_size:])
-  return plaintext.rstrip(b"\0")
+    iv = ciphertext[:AES.block_size]
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    plaintext = cipher.decrypt(ciphertext[AES.block_size:])
+    return plaintext.rstrip(b"\0")
 
 def encrypt_file(file_name, key):
-  with open(file_name, 'rb') as fo:
-    plaintext = fo.read()
-  enc = encrypt(plaintext, key)
-  with open(file_name + ".enc", 'wb') as fo:
-    fo.write(enc)
+    with open(file_name, 'rb') as fo:
+        plaintext = fo.read()
+    enc = encrypt(plaintext, key)
+    with open(file_name + ".enc", 'wb') as fo:
+        fo.write(enc)
 
 def decrypt_file(file_name, key):
-  with open(file_name, 'rb') as fo:
-    ciphertext = fo.read()
-  dec = decrypt(ciphertext, key)
-  with open(file_name[:-4], 'wb') as fo:
-    fo.write(dec)
+    with open(file_name, 'rb') as fo:
+        ciphertext = fo.read()
+    dec = decrypt(ciphertext, key)
+    with open(file_name[:-4], 'wb') as fo:
+        fo.write(dec)
 
 
-key = create_key()
+key = b'\xbf\xc0\x85)\x10nc\x94\x02)j\xdf\xcb\xc4\x94\[EX\x9d(\x9e\xc8\xd5\xbfI{\xa2$\x05(\xd5'
+print(sys.getsizeof(key))
+
 encrypt_file('input.txt', key)
 decrypt_file('input.txt.enc', key)
